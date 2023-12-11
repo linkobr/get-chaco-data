@@ -52,7 +52,7 @@ als_ceramic_tallies <- get_table(tables[[27]]) |>
   select(Site, type, count)
 
 als_ceramic_types <- als_ceramic_tallies |> 
-  pull(var = "Ceramic Type") |> 
+  pull(type) |> 
   unique()
 
 # ignoring an empty column, general cra notes, and the 
@@ -70,6 +70,4 @@ all_ceramics <- bind_rows(als_ceramic_tallies, chaco_survey_ceramics) |>
   summarize(count = sum(count))
   arrange(Site, type)
 
-ceramic_types2 <- wide_tbl |> select(2:15) |> names()
-
-intersect(ceramic_types1, ceramic_types2)
+write.csv(all_ceramics, "data/chaco_ceramics.csv")
